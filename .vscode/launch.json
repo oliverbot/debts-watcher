@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DebtsApplication<debts>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.com.debts.DebtsApplication",
+            "projectName": "debts",
+            "args": ""
+        }
+    ]
+}
