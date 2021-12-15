@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,5 +50,9 @@ public class DebtEntry {
 
     @Column(name = "date_added")
     private Date dateAdded;
+
+    @OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="debt_source_id")
+    private DebtSource debtSource;
     
 }
