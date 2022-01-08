@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,5 +37,8 @@ public class DebtSource {
 
     @Column(name = "credit_card_limit")
     private Long creditCardLimit;
-    
+
+    @Column(name = "due_day")
+    private Long dueDay;
+
 }

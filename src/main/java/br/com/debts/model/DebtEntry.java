@@ -27,8 +27,8 @@ public class DebtEntry {
 
     private Float price;
 
-    @Column(name = "is_father")
-    private Boolean isFather;
+    @Column(name = "is_external")
+    private Boolean isExternal;
 
     @Column(name = "installment_number")
     private Long installmentNumber;
@@ -54,5 +54,7 @@ public class DebtEntry {
     @OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="debt_source_id")
     private DebtSource debtSource;
+
+    private String description;
     
 }
