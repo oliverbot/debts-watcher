@@ -11,9 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class TotalDebts {
+public class SummarizedDebts {
 
-    private List<DebtsByDebtSource> debtSources;
-    private SummarizedDebts summarizedDebts;
+    private Long creditCardLimit;
+    private Float totalDebt;
+    private Float totalDebtExternal;
+    private Float totalDebtInternal;
+    private Float availableLimit;
 
 }

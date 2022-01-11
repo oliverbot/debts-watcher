@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.debts.dto.DebtsByDebtSource;
+import br.com.debts.dto.SummarizedDebts;
 import br.com.debts.dto.TotalDebts;
 import br.com.debts.model.DebtEntry;
 import br.com.debts.model.DebtSource;
@@ -62,20 +63,34 @@ public class DebtService {
         return totalCurrentDebts;
     }
 
+    private SummarizedDebts getSummarizedDebts(List<DebtsByDebtSource> debtSources) {
+        Long creditCardLimit = 0L;
+        Float totalDebt = 0f;
+        Float totalDebtExternal = 0f;
+        Float totalDebtInternal = 0f;
+        Float availableLimit = 0f;
+        for (DebtsByDebtSource debtSource : debtSources) {
+            creditCardLimit += debtSource.getCreditCardLimit();
+            totalDebt += debtSource.getTotalDebt();
+            totalDebtExternal += debtSource.getTotalDebtExternal();
+            totalDebtInternal += debtSource.getTotalDebtInternal();
+            availableLimit += debtSource.getAvailableLimit();
+        }
+        return SummarizedDebts.builder()
+                .creditCardLimit(creditCardLimit)
+                .totalDebt(roundTotal(totalDebt))
+                .totalDebtExternal(roundTotal(totalDebtExternal))
+                .totalDebtInternal(roundTotal(totalDebtInternal))
+                .availableLimit(roundTotal(availableLimit))
+                .build();
+    }
+
     public TotalDebts totalCurrentDebtsBuilder(List<DebtsByDebtSource> debtSources) {
-        Long creditCardLimit = debtSources.stream().mapToLong(DebtsByDebtSource::getCreditCardLimit).sum();
-        Float totalDebt = roundTotal((float) debtSources.stream().mapToDouble(DebtsByDebtSource::getTotalDebt).sum());
-        Float totalDebtExternal = roundTotal((float) debtSources.stream().mapToDouble(DebtsByDebtSource::getTotalDebtExternal).sum());
-        Float totalDebtInternal = roundTotal((float) debtSources.stream().mapToDouble(DebtsByDebtSource::getTotalDebtInternal).sum());
-        Float availableLimit = roundTotal((float) debtSources.stream().mapToDouble(DebtsByDebtSource::getAvailableLimit).sum());
+        SummarizedDebts summarizedDebts = getSummarizedDebts(debtSources);
 
         TotalDebts totalDebts = TotalDebts.builder()
                 .debtSources(debtSources)
-                .creditCardLimit(creditCardLimit)
-                .totalDebt(totalDebt)
-                .totalDebtExternal(totalDebtExternal)
-                .totalDebtInternal(totalDebtInternal)
-                .availableLimit(availableLimit)
+                .summarizedDebts(summarizedDebts)
                 .build();
 
         return totalDebts;
