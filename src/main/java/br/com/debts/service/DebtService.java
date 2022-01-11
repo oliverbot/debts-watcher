@@ -46,7 +46,7 @@ public class DebtService {
      * @return TotalDebts This returns a TotalDebts object containing debts
      *         information and numbers.
      */
-    public TotalDebts getTotalCurrentDebts(Boolean getCurrentDebts) throws Exception {
+    public TotalDebts getTotalDebts(Boolean getCurrentDebts) throws Exception {
 
         List<DebtSource> allDebtSources = debtSourceRepo.findAll();
 

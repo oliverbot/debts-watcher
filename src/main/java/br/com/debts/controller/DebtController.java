@@ -33,17 +33,15 @@ public class DebtController {
     public ResponseEntity<?> getTotalDebtsData(@RequestParam("getCurrentDebts") Boolean getCurrentDebts)
             throws Exception {
         ResponseDTO response = ResponseDTO.builder().build();
+        HttpStatus status = HttpStatus.OK;
         TotalDebts data = TotalDebts.builder().build();
-
         List<String> errors = new ArrayList<String>();
 
-        HttpStatus status = HttpStatus.OK;
-
         try {
-            data = service.getTotalCurrentDebts(getCurrentDebts);
+            data = service.getTotalDebts(getCurrentDebts);
         } catch (Exception e) {
             status = HttpStatus.valueOf(500);
-            errors.add("SERVER ERROR");
+            errors.add("ERROR FETCHING DATA");
             LOG.info("\r\n ERROR: " + e.getMessage() + "\r\n CAUSED BY: " + e.getCause());
         }
 
@@ -73,5 +71,12 @@ public class DebtController {
 
         return ResponseEntity.status(status).body(response);
     }
+
+    @GetMapping(value = "/getDebts")
+    public ResponseEntity<?> getDebts(@RequestParam("getCurrentDebts") Boolean getCurrentDebts)
+            throws Exception {
+
+                return ResponseEntity.status(200).build();
+            }
 
 }
