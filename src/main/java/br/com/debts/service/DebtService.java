@@ -85,6 +85,10 @@ public class DebtService {
                 .build();
     }
 
+    private Float roundTotal(Float total) {
+        return (float) Math.round(total * 100) / 100;
+    }
+
     public TotalDebts totalCurrentDebtsBuilder(List<DebtsByDebtSource> debtSources) {
         SummarizedDebts summarizedDebts = getSummarizedDebts(debtSources);
 
@@ -95,10 +99,6 @@ public class DebtService {
 
         return totalDebts;
 
-    }
-
-    private Float roundTotal(Float total) {
-        return (float) Math.round(total * 100) / 100;
     }
 
     public DebtsByDebtSource debtsByDebtSourceBuilder(DebtSource debtSource, Boolean getCurrentDebts) {
