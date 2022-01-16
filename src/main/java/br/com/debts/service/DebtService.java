@@ -15,10 +15,12 @@ import br.com.debts.dto.SummarizedDebts;
 import br.com.debts.dto.TotalDebts;
 import br.com.debts.model.DebtEntry;
 import br.com.debts.model.DebtSource;
+import br.com.debts.repository.DebtEntriesRepositoryImpl;
 import br.com.debts.repository.DebtEntryRepository;
 import br.com.debts.repository.DebtSourceRepository;
 import br.com.debts.repository.DebtTagRepository;
 import br.com.debts.repository.DebtsRepositoryImpl;
+import br.com.debts.util.DebtEntryFilter;
 import br.com.debts.util.DebtSourceFilter;
 import br.com.debts.util.Filter;
 
@@ -38,6 +40,13 @@ public class DebtService {
 
     @Autowired
     private DebtTagRepository debtTagRepo;
+
+    @Autowired
+    private DebtEntriesRepositoryImpl debtEntryImpl;
+
+    public List<DebtEntry> getDebtEntries(Boolean getCurrentDebts, DebtEntryFilter filter) {
+        return debtEntryImpl.getDebtsByDebtSourceId(getCurrentDebts, filter);
+    }
 
     /**
      * This method is used to build a single object

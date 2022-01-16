@@ -1,5 +1,6 @@
 package br.com.debts.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "debt_source")
-public class DebtSource {
+public class DebtSource implements Serializable {
 
     @Id
 	@Column(name = "id")

@@ -1,12 +1,17 @@
 package br.com.debts.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 
@@ -17,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "debt_entries")
-public class DebtEntry {
+public class DebtEntry implements Serializable {
 
     @Id
 	@Column(name = "id")
@@ -51,7 +56,8 @@ public class DebtEntry {
     @Column(name = "date_added")
     private Date dateAdded;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="debt_source_id")
     private DebtSource debtSource;
 
