@@ -41,6 +41,7 @@ public class DebtEntry implements Serializable {
     @Column(name = "installment_total")
     private Long installmentTotal;
 
+    @JsonIgnore
     @Column(name = "pay_date")
     private Date payDate;
 

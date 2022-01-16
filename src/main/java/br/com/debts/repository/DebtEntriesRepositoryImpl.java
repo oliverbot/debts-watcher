@@ -1,6 +1,8 @@
 package br.com.debts.repository;
 
 import java.math.BigInteger;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,23 +74,30 @@ public class DebtEntriesRepositoryImpl {
 
             for (Object[] obj : queryResult) {
                 DebtEntry debt = new DebtEntry();
+
                 BigInteger id = (BigInteger) obj[0];
+                String name = (String)obj[1];
+                Float price = (Float)obj[2];
                 Integer installmentnumber = (Integer) obj[4];
                 Integer installmenttotal = (Integer) obj[5];
                 Boolean is_external = (Byte) obj[3] == 1 ? true : false;
                 Boolean is_recurrent = (Byte) obj[7] == 1 ? true : false;
                 Boolean is_subscription = (Byte) obj[8] == 1 ? true : false;
                 Boolean is_installment = (Byte) obj[9] == 1 ? true : false;
+                Timestamp date_added = (Timestamp)obj[10];
+                
+
                 debt.setId(id.longValue());
-                debt.setName((String)obj[1]);
-                debt.setPrice((Float)obj[2]);
+                debt.setName(name);
+                debt.setPrice(price);
                 debt.setIsExternal(is_external);
                 debt.setInstallmentNumber(installmentnumber.longValue());
                 debt.setInstallmentTotal(installmenttotal.longValue());
                 debt.setIsRecurrent(is_recurrent);
                 debt.setIsSubscription(is_subscription);
                 debt.setIsInstallment(is_installment);
-                //debt.setDateAdded((Date)obj[10]);
+                debt.setDateAdded(date_added);
+
                 debtsResult.add(debt);
             }
 
@@ -109,7 +118,7 @@ public class DebtEntriesRepositoryImpl {
 
         sql.append("SELECT de.* FROM debt_entries de ");
         sql.append("INNER JOIN debt_source ds ON ds.id = de.debt_source_id ");
-        sql.append("WHERE 1=1 ");
+        sql.append("WHERE 1 = 1 ");
         sql.append(this.getQueryScope(getCurrentDebts, filter));
         sql.append(this.getCurrentEntries(getCurrentDebts));
 
