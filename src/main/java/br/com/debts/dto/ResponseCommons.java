@@ -1,20 +1,19 @@
 package br.com.debts.dto;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.List;
 
-import lombok.Builder;
+import javax.persistence.MappedSuperclass;
+
 import lombok.Getter;
 import lombok.Setter;
 
+@MappedSuperclass
 @Getter
 @Setter
-@Builder
-public class ResponseDTO {
+public class ResponseCommons implements Serializable {
 
     private String status;
-
-    private TotalDebts data;
 
     private List<?> errors;
 

@@ -1,8 +1,6 @@
 package br.com.debts.dto;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.LongStream;
 
 import lombok.Builder;
 import lombok.Getter;

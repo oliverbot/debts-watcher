@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.debts.dto.ResponseDTO;
+import br.com.debts.dto.ResponseAllDebts;
 import br.com.debts.dto.TotalDebts;
 import br.com.debts.model.DebtSource;
 import br.com.debts.service.DebtService;
@@ -34,44 +34,46 @@ public class DebtController {
     @GetMapping(value = "/getTotalDebtsData")
     public ResponseEntity<?> getTotalDebtsData(@RequestParam("getCurrentDebts") Boolean getCurrentDebts)
             throws Exception {
-        ResponseDTO response = ResponseDTO.builder().build();
+        ResponseAllDebts response = new ResponseAllDebts();
+
         HttpStatus status = HttpStatus.OK;
-        TotalDebts data = TotalDebts.builder().build();
         List<String> errors = new ArrayList<String>();
+        TotalDebts data = TotalDebts.builder().build();
 
         try {
             data = service.getTotalDebts(getCurrentDebts);
         } catch (Exception e) {
             status = HttpStatus.valueOf(500);
             errors.add("ERROR FETCHING DATA");
+
+            LOG.info("//----------------------------//");
             LOG.info("\r\n ERROR: " + e.getMessage() + "\r\n CAUSED BY: " + e.getCause());
+            LOG.info("//----------------------------//");
         }
 
         if (errors.isEmpty()) {
             errors.add("NONE");
-            response = ResponseDTO.builder()
-                    .status("OK")
-                    .data(data)
-                    .errors(errors)
-                    .build();
+            response = this.buildResponseAllDebts("OK", errors, data);
         } else if (data == null) {
             errors.add("COULDN'T FIND RESOURCE");
 
             status = HttpStatus.NOT_FOUND;
-            response = ResponseDTO.builder()
-                    .status("ERROR")
-                    .data(data)
-                    .errors(errors)
-                    .build();
+            response = this.buildResponseAllDebts("ERROR", errors, data);
         } else {
-            response = ResponseDTO.builder()
-                    .status("ERROR")
-                    .data(data)
-                    .errors(errors)
-                    .build();
+            response = this.buildResponseAllDebts("ERROR", errors, data);
         }
 
         return ResponseEntity.status(status).body(response);
+    }
+
+    private ResponseAllDebts buildResponseAllDebts(String status, List<?> errors, TotalDebts data) {
+        ResponseAllDebts response = new ResponseAllDebts();
+
+        response.setStatus(status);
+        response.setErrors(errors);
+        response.setAllDebts(data);
+
+        return response;
     }
 
     @GetMapping(value = "/getDebts")
