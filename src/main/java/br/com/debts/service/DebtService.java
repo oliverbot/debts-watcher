@@ -102,7 +102,7 @@ public class DebtService {
         SummarizedDebts summarizedDebts = getSummarizedDebts(debtSources);
 
         TotalDebts totalDebts = TotalDebts.builder()
-                .debtSources(debtSources)
+                .debtSourcesSummarized(debtSources)
                 .summarizedDebts(summarizedDebts)
                 .build();
 

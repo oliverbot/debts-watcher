@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 public class TotalDebts {
 
-    private List<DebtsByDebtSource> debtSources;
+    private List<DebtsByDebtSource> debtSourcesSummarized;
     private SummarizedDebts summarizedDebts;
 
 }
