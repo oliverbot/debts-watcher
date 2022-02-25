@@ -24,7 +24,6 @@ public class DebtController {
     @Autowired
     private DebtService service;
 
-    @ApiOperation(value = "Encontra a prova de acordo com o seu Id")
     @GetMapping(value = "/getTotalDebtsData")
     public ResponseEntity<?> getTotalDebtsData(@RequestParam("getCurrentDebts") Boolean getCurrentDebts)
             throws Exception {
@@ -45,7 +44,6 @@ public class DebtController {
 
     }
 
-    @ApiOperation(value = "Encontra a prova de acordo com o seu Id")
     @GetMapping(value = "/getDebts")
     public ResponseEntity<?> getDebts(@RequestParam("getCurrentDebts") Boolean getCurrentDebts, @RequestBody DebtEntryFilter filter)
             throws Exception {
